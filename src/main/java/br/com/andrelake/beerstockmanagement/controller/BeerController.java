@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import br.com.andrelake.beerstockmanagement.dto.BeerDTO;
 import br.com.andrelake.beerstockmanagement.dto.QuantityDTO;
 import br.com.andrelake.beerstockmanagement.exception.BeerAlreadyRegisteredException;
+import br.com.andrelake.beerstockmanagement.exception.BeerMinimumStockExceededException;
 import br.com.andrelake.beerstockmanagement.exception.BeerNotFoundException;
 import br.com.andrelake.beerstockmanagement.exception.BeerStockExceededException;
 import br.com.andrelake.beerstockmanagement.service.BeerService;
@@ -54,5 +55,10 @@ public class BeerController implements BeerControllerDocs {
     @PatchMapping("/{id}/increment")
     public BeerDTO increment(@PathVariable Long id, @RequestBody @Valid QuantityDTO quantityDTO) throws BeerNotFoundException, BeerStockExceededException {
         return beerService.increment(id, quantityDTO.getQuantity());
+    }
+    
+    @PatchMapping("/{id}/decrement")
+    public BeerDTO decrement(@PathVariable Long id, @RequestBody @Valid QuantityDTO quantityDTO) throws BeerNotFoundException, BeerMinimumStockExceededException {
+    	return beerService.decrement(id, quantityDTO.getQuantity());
     }
 }
